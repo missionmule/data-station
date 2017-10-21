@@ -15,15 +15,15 @@ The goal is to automate SleepyPi firmware upload in the future, but it is manual
 3. To upload firmware onto SleepyPi you will have to connect to the camera trap over RealVNC. Both you and the camera trap must be connected to the Wadi Drone network. You use the Raspberry Pi UNIX login, which is `pi` as user name and `raspberry` as password.
 
 ### Libraries necessary for Sleepy Pi 2
-    These libraries only need to be installed the first time the Raspberry Pi is set up from scratch.
-    ```
+These libraries only need to be installed the first time the Raspberry Pi is set up from scratch.
+
     git clone https://github.com/PaulStoffregen/Time.git
     git clone https://github.com/rocketscream/Low-Power.git
     # rename the directory as Arduino doesn't like the dash
     mv /home/pi/sketchbook/libraries/Low-Power /home/pi/sketchbook/libraries/LowPower
     git clone https://github.com/SpellFoundry/PCF8523.git
     git clone https://github.com/GreyGnome/PinChangeInt.git
-    ```
+
 
 ## Tips
 - SleepyPi compiler does not like dashes in the names of files

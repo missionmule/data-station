@@ -1,6 +1,7 @@
 #file to be loaded on RasPi@CameraTrap that backs up photos
 #camerabu = camera back up
 #loaded an option into sudo nano /etc/ssh/ssh_config and append ServerAliveInterval 60
+# Adding line to see if it requires code review
 
 import subprocess as sp
 

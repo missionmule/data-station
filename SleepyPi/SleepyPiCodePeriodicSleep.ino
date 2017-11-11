@@ -7,13 +7,16 @@
 //Software serial from https://github.com/arduino/Arduino/tree/master/hardware/arduino/avr/libraries/SoftwareSerial
 #include <SoftwareSerial.h> 
 
-#define TIMEOUT_MSEC 300000
-#define CAMERA_ID String("002")
-#define FIRMWARE_VERSION String("0.4 Trans, timeout and periodic sleep")
+#define TIMEOUT_MSEC 300000 // Timeout to shut down power from RPi in case no transmission happened for too long
+#define CAMERA_ID String("002") // ID should match value in Camera Trap RPi, TODO: Set this automatically from RPi to avoid mismatch
+#define FIRMWARE_VERSION String("0.4 Trans, timeout and periodic sleep") // Update when releasing new version
+#define SLEEP_DURATION_SEC 60 // Sleep time during which Sleepy pi (with ADC) and Xbee turn off (in between looking for drone)
 
+//TODO: Erase these legacy variables.
 int green = 6;
 int yellow = 5;
 
+//Note- there are two serials, this one is for communication with Xbee
 //Uses software serial from Github with extra functions
 SoftwareSerial xBeeSerial(9, 10); // Serial for Xbee RX, TX
 
@@ -92,6 +95,8 @@ void loop() {
     lowPowerMode();
   }
 
+  // Transmission is used as a proxy for drone being in viccinity
+  // Careful, if drone is downloading over TCP/IP but not communicating on XBee the program can shut down RPi and hence stop the transmission
   if (xBeeSerial.available()) {
     Serial.println("Character was available");
     droneInViccinity = true;
@@ -128,7 +133,7 @@ void loop() {
     }
     else if (command == "RSET"){
       droneInViccinity = false;
-      resetCamera();
+      resetCamera(); //TODO: Erase. This code was used when we needed to use relay in camera.
     }
     else if (command == "IDEN"){
       droneInViccinity = true;
@@ -139,7 +144,7 @@ void loop() {
     readCommand = false;
   }
 
-  //timeot if no communication happened for a long time
+  // Timeout if no communication happened for a long time, Shuts down RPi
   if ((millis()-timeSinceLastContact > TIMEOUT_MSEC)) {
     Serial.println("Timeout occured");
     timeSinceLastContact=millis();
@@ -166,6 +171,7 @@ void alarm_isr()
 
 }
 
+//This function puts Sleepy Pi to sleep for SLEEP_DURATION_SEC, turning off ADC, BOD (hence Xbee is off, conserving power)
 void lowPowerMode() {
   xBeeSerial.stopListening();
   Serial.println(SleepyPi.rtcIsRunning() ? "PCF8523 connection successful" : "PCF8523 connection failed");
@@ -178,7 +184,7 @@ void lowPowerMode() {
   // Allow wake up alarm to trigger interrupt on falling edge.
   attachInterrupt(0, alarm_isr, FALLING);    // Alarm pin
   // Set the Periodic Timer
-  SleepyPi.setTimer1(eTB_SECOND, 60);
+  SleepyPi.setTimer1(eTB_SECOND, SLEEP_DURATION_SEC);
   delay(500);
   // Enter power down state with ADC and BOD module disabled.
   // Wake up when wake up pin is low.
@@ -279,7 +285,7 @@ void reader (bool &start, bool &parse, char dataInputBuffer[], char theChar){
   }
 }
 
-void resetCamera() {
+void resetCamera() { //TODO: Erase. This code was used when we needed to use relay in camera.
   pi_running = SleepyPi.checkPiStatus(false);
   if (pi_running == true){
     shutPi();
@@ -289,7 +295,7 @@ void resetCamera() {
   Serial.print("Reset Camera");
 }
 
-void masterOn() {
+void masterOn() { //TODO: Erase. This code was used when we needed to use relay in camera.
   turnSetup(green,yellow);
   delay(50);
   turnOff(green, yellow);
@@ -299,27 +305,27 @@ void masterOn() {
   turnOn(green, yellow);
 }
 
-void masterOff() {
+void masterOff() { //TODO: Erase. This code was used when we needed to use relay in camera.
   turnSetup(green,yellow);
   delay(50);
   turnOff(green, yellow);
 }
 
-void masterSetup() {
+void masterSetup() { //TODO: Erase. This code was used when we needed to use relay in camera.
   turnSetup(green,yellow);
 }
 
-void turnOff(int green, int yellow) {
+void turnOff(int green, int yellow) { //TODO: Erase. This code was used when we needed to use relay in camera.
   digitalWrite(green, HIGH);
   digitalWrite(yellow, LOW); //default state of yellow is connected to COM
 }
 
-void turnOn(int green, int yellow) {
-  digitalWrite(green, LOW);
+void turnOn(int green, int yellow) { //TODO: Erase. This code was used when we needed to use relay in camera.
+  digitalWrite(green, LOW); 
   digitalWrite(yellow,LOW);
 }
 
-void turnSetup(int green, int yellow) {
+void turnSetup(int green, int yellow) { //TODO: Erase. This code was used when we needed to use relay in camera.
   digitalWrite(green, LOW);
   digitalWrite(yellow, HIGH);
 }

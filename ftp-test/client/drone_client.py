@@ -21,7 +21,7 @@ class DroneClient:
             os.mkdir('./photos/')
 
         self.__client = FTP('')
-        self.__client.connect('localhost',2121)
+        self.__client.connect("192.168.10.154",2121)
         self.__client.login(login['username'], login['password'])
         self.__client.cwd('.')
 

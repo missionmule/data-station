@@ -1,4 +1,5 @@
 ftp-test/login_credentials.config
+ftp-test/client/photos/*.jpg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

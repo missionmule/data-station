@@ -16,6 +16,10 @@ class DroneClient:
         with open(login_credentials_path) as config:
             login = json.load(config)
 
+        # Make directory to download to if one does not exist
+        if not (os.path.isdir('./photos/')):
+            os.mkdir('./photos/')
+
         self.__client = FTP('')
         self.__client.connect('localhost',2121)
         self.__client.login(login['username'], login['password'])
@@ -26,7 +30,7 @@ class DroneClient:
 
     def downloadFile(self, file_name):
         # Create new file in downloads directory with same file name
-        local_file = open('./downloads/'+file_name, 'wb')
+        local_file = open('./photos/'+file_name, 'wb')
 
         # Download the file in 1024 byte chunks so buffer does not overflow
         self.__client.retrbinary('RETR ' + file_name, local_file.write, 1024)

@@ -28,13 +28,12 @@ class CameraServer:
         self.__authorizer.add_user(login['username'],
             login['password'], './photos/', perm='elrad')
 
-
         # Instantiate FTP handler class
         self.__handler = FTPHandler
         self.__handler.authorizer = self.__authorizer
 
-        # Instantiate FTP server class and listen on 0.0.0.0:2121
-        self.__address = ('localhost', 2121)
+        # Instantiate FTP server class and listen on 127.0.0.1:2121
+        self.__address = ('', 2121)
         self.__server = FTPServer(self.__address, self.__handler)
 
         # set a limit for connections

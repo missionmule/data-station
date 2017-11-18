@@ -8,9 +8,6 @@ from pyftpdlib.servers import FTPServer
 class CameraServer:
 
     __server = None
-    __authorizer = None
-    __handler = None
-    __address = None
 
     def __init__(self, login_credentials_path):
 
@@ -22,19 +19,19 @@ class CameraServer:
             login = json.load(config)
 
         # Define a new user having read-only permissions
-        self.__authorizer = DummyAuthorizer()
+        __authorizer = DummyAuthorizer()
 
         # photos_path = os.path.join(basepath, '/photos')
-        self.__authorizer.add_user(login['username'],
+        __authorizer.add_user(login['username'],
             login['password'], './photos/', perm='elrad')
 
         # Instantiate FTP handler class
-        self.__handler = FTPHandler
-        self.__handler.authorizer = self.__authorizer
+        __handler = FTPHandler
+        __handler.authorizer = __authorizer
 
         # Instantiate FTP server class and listen on 127.0.0.1:2121
-        self.__address = ('', 2121)
-        self.__server = FTPServer(self.__address, self.__handler)
+        address = ('', 2121)
+        self.__server = FTPServer(address, __handler)
 
         # set a limit for connections
         self.__server.max_cons = 256

@@ -1,4 +1,6 @@
 import json
+import socket
+import time
 import os
 
 from ftplib import FTP
@@ -7,7 +9,7 @@ class DroneClient:
 
     __client = None    # Pseudo-private variable
 
-    def __init__(self, login_credentials_path):
+    def __init__(self, login_credentials_path, server_ip_address):
 
         # Move into correct directory for file path references
         os.chdir(os.path.dirname(__file__))
@@ -21,11 +23,20 @@ class DroneClient:
             os.mkdir('./photos/')
 
         self.__client = FTP('')
-        self.__client.connect("192.168.10.154",2121)
+
+        # If server is refusing to connect (it isn't up yet),
+        # keep trying until connection is made
+        while True:
+            try:
+                self.__client.connect(server_ip_address, 2121) # Try to connect
+                break
+            except socket.error: # Connection refused
+                time.sleep(1) # Try again in a second
+
         self.__client.login(login['username'], login['password'])
         self.__client.cwd('.')
 
-    def list_files(self):
+    def getFileList(self):
         return self.__client.nlst()
 
     def downloadFile(self, file_name):
@@ -38,7 +49,7 @@ class DroneClient:
         local_file.close()
 
     def downloadAllPhotos(self):
-        for file_name in self.list_files():
+        for file_name in self.getFileList():
             self.downloadFile(file_name)
 
     def quit(self):

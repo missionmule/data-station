@@ -5,7 +5,7 @@
 #include <Wire.h>
 
 //Software serial from https://github.com/arduino/Arduino/tree/master/hardware/arduino/avr/libraries/SoftwareSerial
-#include <SoftwareSerial.h> 
+#include <SoftwareSerial.h>
 
 #define TIMEOUT_MSEC 300000
 #define CAMERA_ID String("002")
@@ -71,9 +71,9 @@ void setup() {
   if (getDate(__DATE__) && getTime(__TIME__)) {
       // and configure the RTC with this info
       SleepyPi.setTime(DateTime(F(__DATE__), F(__TIME__)));
-  } 
-  
-  printTimeNow();   
+  }
+
+  printTimeNow();
 }
 
 void loop() {
@@ -87,7 +87,7 @@ void loop() {
   Serial.println(droneInViccinity);
   Serial.print("Value of millis is ");
   Serial.println(millis());
-  
+
   if(!droneInViccinity) {
     lowPowerMode();
   }
@@ -147,7 +147,7 @@ void loop() {
     droneInViccinity = false;
     //turn off raspberry pi
     if(SleepyPi.checkPiStatus(false)) {
-      //shutPi();
+      shutPi();
     }
   }
 
@@ -170,7 +170,7 @@ void lowPowerMode() {
   xBeeSerial.stopListening();
   Serial.println(SleepyPi.rtcIsRunning() ? "PCF8523 connection successful" : "PCF8523 connection failed");
   Serial.println("Sleepy pi is going to sleep.");
-  printTimeNow();  
+  printTimeNow();
   delay(50);
   SleepyPi.enableExtPower(false);
   delay(50);
@@ -195,7 +195,7 @@ void lowPowerMode() {
   Serial.print("Overflow flag is ");
   Serial.println(xBeeSerial.overflow());
   Serial.println("Sleepy pi woke up from sleep.");
-  printTimeNow();  
+  printTimeNow();
   delay(500);
   return;
 }
@@ -325,7 +325,7 @@ void turnSetup(int green, int yellow) {
 }
 
 // **********************************************************************
-// 
+//
 //  - Helper routines from John Atkins Sleepy Pi Example Periodic Sleep
 //
 // **********************************************************************
@@ -333,7 +333,7 @@ void printTimeNow()
 {
     // Read the time
     DateTime now = SleepyPi.readTime();
-    
+
     // Print out the time
     Serial.print("Ok, Time = ");
     print2digits(now.hour());
@@ -344,7 +344,7 @@ void printTimeNow()
     Serial.print(", Date (D/M/Y) = ");
     Serial.print(now.day());
     Serial.write('/');
-    Serial.print(now.month()); 
+    Serial.print(now.month());
     Serial.write('/');
     Serial.print(now.year(), DEC);
     Serial.println();

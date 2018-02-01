@@ -9,13 +9,15 @@
 #define PI_PWR_CMD (4)
 #define SNSR_PWR_CTRL (5)
 
+int shutdownStart = 1;
 
 const char STATION_ID[2] = {'0', '1'};
 
 char droneCommand;
 
 unsigned long timerStart;
-const int TIMEOUT = 60000;
+unsigned long timeElapsed;
+const unsigned long TIMEOUT = 60000;
 
 volatile int f_wdt=1;
 volatile int count = 0;
@@ -102,7 +104,7 @@ void executeCommand(char command) {
       break;
     case '2':
       Serial.println("Received Command: POWER_OFF");
-      shutDownSystem();
+      shutdownStart = 1;
       break;
     case '3':
       Serial.println("Received Command: EXTEND_TIME");
@@ -224,6 +226,7 @@ void setupWatchDogTimer() {
 
 void powerUpSystem(){
   Serial.println("Powering up Raspberry Pi");
+  shutdownStart = 0;
   digitalWrite(PI_PWR_CMD, HIGH);
   digitalWrite(PI_PWR_CTRL, HIGH);
 }
@@ -256,21 +259,28 @@ void loop(){
   droneCommand = checkForDroneCommand();
   
   if (droneCommand){
-    Serial.println("Drone in vicinity...");
-    executeCommand(droneCommand);
     timerStart = millis();
+    Serial.println("Drone in vicinity...");
+    executeCommand(droneCommand); 
     
-    while ((millis()-timerStart) < TIMEOUT){
-      delay(200);
+    while (!shutdownStart){
+      timeElapsed = millis()-timerStart;
+      Serial.print("Time remaining (seconds): ");
+      Serial.println((TIMEOUT-timeElapsed)/1000);
+      
+      if (timeElapsed > TIMEOUT){
+        Serial.println("Timeout event...");
+        break;
+      }
+
       droneCommand = checkForDroneCommand();
 
       if (droneCommand)
         executeCommand(droneCommand);
 
-    }
-    
-    Serial.println("Timeout event...");
-    
+      delay(200);
+
+    }   
   }
 
   Serial.println("Going to slepp...ZZzzz");

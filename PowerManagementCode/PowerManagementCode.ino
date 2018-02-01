@@ -6,7 +6,7 @@
 
 #define PI_PWR_CTRL (2)
 #define PI_PWR_STATUS (3)
-#define PI_PWR_DOWN (4)
+#define PI_PWR_CMD (4)
 #define SNSR_PWR_CTRL (5)
 
 
@@ -15,7 +15,7 @@ const char STATION_ID[2] = {'0', '1'};
 char droneCommand;
 
 unsigned long timerStart;
-const int TIMEOUT = 10000;
+const int TIMEOUT = 60000;
 
 volatile int f_wdt=1;
 volatile int count = 0;
@@ -122,13 +122,13 @@ void setup(){
   // Setup Control Pins
   pinMode(PI_PWR_CTRL, OUTPUT);
   pinMode(SNSR_PWR_CTRL, OUTPUT);
-  pinMode(PI_PWR_DOWN, OUTPUT);
+  pinMode(PI_PWR_CMD, OUTPUT);
   pinMode(PI_PWR_STATUS, INPUT);
 
 
   // Initialize Control Pins
   digitalWrite(PI_PWR_CTRL, HIGH);
-  digitalWrite(PI_PWR_DOWN, LOW);
+  digitalWrite(PI_PWR_CMD, LOW);
   digitalWrite(SNSR_PWR_CTRL, HIGH);
   
 
@@ -223,22 +223,26 @@ void setupWatchDogTimer() {
 }
 
 void powerUpSystem(){
-  digitalWrite(PI_PWR_DOWN, LOW);
+  Serial.println("Powering up Raspberry Pi");
+  digitalWrite(PI_PWR_CMD, HIGH);
   digitalWrite(PI_PWR_CTRL, HIGH);
 }
 
 void shutDownSystem(){
-
+  
   // We need to power down the raspi... safely (or else Zane gets his pannies in a bunch!)
   // The Raspi should have daemon running that continuously monitors the state of GPIO pin
   // 22. When it receives a logic HIGH, it initiates a shutdown. :)
+  digitalWrite(PI_PWR_CMD, LOW);
   while (digitalRead(PI_PWR_STATUS) == HIGH){
-    digitalWrite(PI_PWR_DOWN, HIGH);
     Serial.println("Waiting for Pi to power down...");
     delay(1000);
   }
-  digitalWrite(PI_PWR_DOWN, LOW);
+  Serial.println("Raspberry Pi is off. Cutting power...");
   digitalWrite(PI_PWR_CTRL, LOW);
+    
+  delay(1000);
+  Serial.flush();
   enterSleep();
 }
 
@@ -270,7 +274,7 @@ void loop(){
   }
 
   Serial.println("Going to slepp...ZZzzz");
-  delay(500);
+  
   shutDownSystem();
   
  }

@@ -1,4 +1,3 @@
-// A2DD.h
 #ifndef COMMUNICATION_H
 #define COMMUNICATION_H
 #include <SoftwareSerial.h>

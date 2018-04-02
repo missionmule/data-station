@@ -1,5 +1,5 @@
 #include "Communication.h"
-#include <delay.h>
+
 
 // check to see if there are available commands
 int Communication::getDroneCommand(){
@@ -38,6 +38,7 @@ int Communication::getDroneCommand(){
         preamblemCount = 0;
       }
     }
+    delay(500);
   }
   return 0;
 }

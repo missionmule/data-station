@@ -26,17 +26,17 @@ void executeCommand(char command) {
   char preambleResponse[3] = {'c','a','t'};
 
   for (int i = 0; i < 3; i++){
-    XBee.write(preambleResponse[i]);
+    comms.write(preambleResponse[i]);
   }
 
-  XBee.write(STATION_ID[0]);
-  XBee.write(STATION_ID[1]);
+  comms.write(STATION_ID[0]);
+  comms.write(STATION_ID[1]);
 
-  XBee.write(command);
+  comms.write(command);
 
   // flush outgoing and incoming buffer, respectively
-  XBee.flush();
-  xBeeFlushIncomingBuffer();
+  comms.flush();
+  comms.flushIncommingBuffer();
 
   // execute the requested command
   switch (command) {
@@ -100,11 +100,11 @@ ISR(WDT_vect) {
 // Enters the arduino into sleep mode.
 void enterSleep(void)
 {
-  xBeeFlushIncomingBuffer();
+  comms.flushIncommingBuffer();
   // clear the flag so we can run code again after the MCU wake up
   f_wdt = 0;
 
-  XBee.end();
+  comms.end();
   digitalWrite(SNSR_PWR_CTRL, LOW);
 
 
@@ -124,7 +124,7 @@ void enterSleep(void)
   power_all_enable();
 
   digitalWrite(SNSR_PWR_CTRL, HIGH);
-  XBee.begin(9600);
+  comms.begin(9600);
 }
 
 void setupWatchDogTimer() {
@@ -217,7 +217,7 @@ void loop(){
         break;
       }
 
-      droneCommand = checkForDroneCommand();
+      droneCommand = comms.getDroneCommand();
 
       if (droneCommand)
         executeCommand(droneCommand);
@@ -232,6 +232,4 @@ void loop(){
   shutDownSystem();
 
  }
-void loop(){
 
-}

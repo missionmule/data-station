@@ -2,6 +2,7 @@
 #ifndef COMMUNICATION_H
 #define COMMUNICATION_H
 #include <SoftwareSerial.h>
+#include "Arduino.h"
 
 class Communication : public SoftwareSerial{
 

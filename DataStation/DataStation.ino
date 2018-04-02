@@ -1,4 +1,4 @@
-#include <SoftwareSerial.h>
+#include "Communication.h"
 #include <avr/sleep.h>
 #include <avr/power.h>
 #include <avr/wdt.h>
@@ -11,8 +11,8 @@
 
 int shutdownStart = 1;
 
-const char STATION_ID[2] = {'0', '1'};
-
+char STATION_ID[2] = {'0', '1'};
+Communication comms(10, 11, 9600, STATION_ID); // RX, TX, Baudrate
 char droneCommand;
 
 unsigned long timerStart;
@@ -21,64 +21,6 @@ const unsigned long TIMEOUT = 60000;
 
 volatile int f_wdt=1;
 volatile int count = 0;
-
-SoftwareSerial XBee(10, 11); // RX, TX
-
-void xBeeFlushIncomingBuffer(){
-  char incommingByte;
-
-  while (XBee.available()){
-    incommingByte = XBee.read();
-    Serial.println("flushing...");
-  }
-}
-
-int checkForDroneCommand(){
-  char incommingByte;
-  char preamble[6] = {'s', 't', 'r', 'e', 'e', 't'};
-  bool idenMatch = false;
-  bool preambleSuccess = false;
-  int preamblemCount = 0;
-  int idenCount = 0;
-
-  Serial.println("Checking for Drone");
-  for (int i = 0; i < 10; i++){
-    while (XBee.available()){
-      incommingByte = XBee.read();
-      Serial.println(incommingByte);
-
-      if (idenMatch == true) {
-        Serial.println("Identity Match");
-        return incommingByte;
-      }
-
-      else if (preambleSuccess == true){
-        if (incommingByte == STATION_ID[idenCount]){
-          idenCount++;
-        }
-        else {
-          preambleSuccess = false;
-          preamblemCount = 0;
-        }
-        idenMatch = (idenCount == 2);
-      }
-
-      else if (incommingByte == preamble[preamblemCount]){
-        preamblemCount++;
-        preambleSuccess = (preamblemCount == 6);
-      }
-
-      else {
-        preamblemCount = 0;
-      }
-
-    }
-    delay(500);
-  }
-  Serial.println("Returning");
-  return 0;
-
-}
 
 void executeCommand(char command) {
   char preambleResponse[3] = {'c','a','t'};
@@ -122,7 +64,6 @@ void executeCommand(char command) {
 // TODO: Add support for UBlox GPS Module, comm with I2C
 
 void setup(){
-  XBee.begin(9600);
   Serial.begin(9600);
 
   // Setup Control Pins
@@ -136,7 +77,6 @@ void setup(){
   digitalWrite(PI_PWR_CTRL, HIGH);
   digitalWrite(PI_PWR_CMD, LOW);
   digitalWrite(SNSR_PWR_CTRL, HIGH);
-
 
   // Initialize Watchdog Timer
   setupWatchDogTimer();
@@ -260,7 +200,7 @@ void loop(){
     return;
   }
 
-  droneCommand = checkForDroneCommand();
+  droneCommand = comms.getDroneCommand();
 
   if (droneCommand){
     timerStart = millis();
@@ -292,3 +232,6 @@ void loop(){
   shutDownSystem();
 
  }
+void loop(){
+
+}

@@ -1,8 +1,6 @@
 #include "Communication.h"
-#include <avr/sleep.h>
-#include <avr/power.h>
-#include <avr/wdt.h>
-#include "Arduino.h"
+#include "PowerManager.h"
+
 
 #define PI_PWR_CTRL (2)
 #define PI_PWR_STATUS (3)
@@ -12,37 +10,43 @@
 int shutdownStart = 1;
 
 char STATION_ID[2] = {'0', '1'};
-Communication comms(10, 11, 9600, STATION_ID); // RX, TX, Baudrate
+
+volatile int f_wdt=1;
+volatile int count = 0;
+
+Communication * comms = new Communication(10, 11, 9600, STATION_ID); // RX, TX, Baudrate
+PowerManager * powerManager = new PowerManager(comms, &f_wdt);
+
 char droneCommand;
 
 unsigned long timerStart;
 unsigned long timeElapsed;
 const unsigned long TIMEOUT = 60000;
 
-volatile int f_wdt=1;
-volatile int count = 0;
+
 
 void executeCommand(char command) {
   char preambleResponse[3] = {'c','a','t'};
 
   for (int i = 0; i < 3; i++){
-    comms.write(preambleResponse[i]);
+    comms->write(preambleResponse[i]);
   }
 
-  comms.write(STATION_ID[0]);
-  comms.write(STATION_ID[1]);
+  comms->write(STATION_ID[0]);
+  comms->write(STATION_ID[1]);
 
-  comms.write(command);
+  comms->write(command);
 
   // flush outgoing and incoming buffer, respectively
-  comms.flush();
-  comms.flushIncommingBuffer();
+  comms->flush();
+  comms->flushIncommingBuffer();
 
   // execute the requested command
   switch (command) {
     case '1':
       Serial.println("Received Command: POWER_ON");
-      powerUpSystem();
+      shutdownStart = 0;
+      powerManager->powerUpSystem();
       break;
     case '2':
       Serial.println("Received Command: POWER_OFF");
@@ -66,20 +70,10 @@ void executeCommand(char command) {
 void setup(){
   Serial.begin(9600);
 
-  // Setup Control Pins
-  pinMode(PI_PWR_CTRL, OUTPUT);
-  pinMode(SNSR_PWR_CTRL, OUTPUT);
-  pinMode(PI_PWR_CMD, OUTPUT);
-  pinMode(PI_PWR_STATUS, INPUT);
-
-
-  // Initialize Control Pins
-  digitalWrite(PI_PWR_CTRL, HIGH);
-  digitalWrite(PI_PWR_CMD, LOW);
-  digitalWrite(SNSR_PWR_CTRL, HIGH);
+  
 
   // Initialize Watchdog Timer
-  setupWatchDogTimer();
+  powerManager->setupWatchDogTimer();
 
   Serial.println("Initialized");
 }
@@ -102,11 +96,11 @@ ISR(WDT_vect) {
 void loop(){
   // Wait until the watchdog has triggered a wake up.
   if(f_wdt != 1) {
-    enterSleep();
+    powerManager->enterSleep();
     return;
   }
 
-  droneCommand = comms.getDroneCommand();
+  droneCommand = comms->getDroneCommand();
 
   if (droneCommand){
     timerStart = millis();
@@ -123,7 +117,7 @@ void loop(){
         break;
       }
 
-      droneCommand = comms.getDroneCommand();
+      droneCommand = comms->getDroneCommand();
 
       if (droneCommand)
         executeCommand(droneCommand);
@@ -135,7 +129,7 @@ void loop(){
 
   Serial.println("Going to slepp...ZZzzz");
 
-  shutDownSystem();
+  powerManager->shutDownSystem();
 
  }
 

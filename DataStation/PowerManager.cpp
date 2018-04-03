@@ -1,34 +1,43 @@
-// Enters the arduino into sleep mode.
-void enterSleep(void)
-{
-  comms.flushIncommingBuffer();
-  // clear the flag so we can run code again after the MCU wake up
-  f_wdt = 0;
+#include "PowerManager.h"
 
-  comms.end();
-  digitalWrite(SNSR_PWR_CTRL, LOW);
+// configure digital pins
+void PowerManager::setupDigitalPins(){
+  // Setup Control Pins
+  pinMode(PI_PWR_CTRL, OUTPUT);
+  pinMode(SNSR_PWR_CTRL, OUTPUT);
+  pinMode(PI_PWR_CMD, OUTPUT);
+  pinMode(PI_PWR_STATUS, INPUT);
 
 
-  // SLEEP_MODE_PWR_DOWN - the highest power saving mode
-  set_sleep_mode(SLEEP_MODE_PWR_DOWN);
-  sleep_enable();
-
-  // Now enter sleep mode.
-  sleep_mode();
-
-  // The program will continue from here after the WDT timeout
-
-  // First thing to do is disable sleep.
-  sleep_disable();
-
-  // Re-enable the peripherals.
-  power_all_enable();
-
+  // Initialize Control Pins
+  digitalWrite(PI_PWR_CTRL, HIGH);
+  digitalWrite(PI_PWR_CMD, LOW);
   digitalWrite(SNSR_PWR_CTRL, HIGH);
-  comms.begin(9600);
 }
 
-void setupWatchDogTimer() {
+// shut down data station
+void PowerManager::shutDownSystem(){
+  // We need to power down the raspi... safely (or else Zane gets his pannies in a bunch!)
+  // The Raspi should have daemon running that continuously monitors the state of GPIO pin
+  // 22. When it receives a logic HIGH, it initiates a shutdown. :)
+  digitalWrite(PI_PWR_CMD, LOW);
+  while (digitalRead(PI_PWR_STATUS) == HIGH){
+    delay(1000);
+  }
+  digitalWrite(PI_PWR_CTRL, LOW);
+
+  delay(1000);
+  enterSleep();
+}
+
+// power up data station
+void PowerManager::powerUpSystem(){
+  digitalWrite(PI_PWR_CMD, HIGH);
+  digitalWrite(PI_PWR_CTRL, HIGH);
+}
+
+// configure watchdog timer
+void PowerManager::setupWatchDogTimer(){
   // The MCU Status Register (MCUSR) is used to tell the cause of the last
   // reset, such as brown-out reset, watchdog reset, etc.
   // NOTE: for security reasons, there is a timed sequence for clearing the
@@ -66,30 +75,35 @@ void setupWatchDogTimer() {
   */
   WDTCSR  = (1<<WDP3) | (0<<WDP2) | (0<<WDP1) | (1<<WDP0);
   // Enable the WD interrupt (note: no reset).
-  WDTCSR |= _BV(WDIE);
+  WDTCSR |= _BV(WDIE);  
 }
 
-void powerUpSystem(){
-  Serial.println("Powering up Raspberry Pi");
-  shutdownStart = 0;
-  digitalWrite(PI_PWR_CMD, HIGH);
-  digitalWrite(PI_PWR_CTRL, HIGH);
+// go into sleep mode
+void PowerManager::enterSleep(){
+  comms->flushIncommingBuffer();
+  // clear the flag so we can run code again after the MCU wake up
+  *f_wdt = 0;
+
+  comms->end();
+  digitalWrite(SNSR_PWR_CTRL, LOW);
+
+
+  // SLEEP_MODE_PWR_DOWN - the highest power saving mode
+  set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+  sleep_enable();
+
+  // Now enter sleep mode.
+  sleep_mode();
+
+  // The program will continue from here after the WDT timeout
+
+  // First thing to do is disable sleep.
+  sleep_disable();
+
+  // Re-enable the peripherals.
+  power_all_enable();
+
+  digitalWrite(SNSR_PWR_CTRL, HIGH);
+  comms->begin(9600); 
 }
 
-void shutDownSystem(){
-
-  // We need to power down the raspi... safely (or else Zane gets his pannies in a bunch!)
-  // The Raspi should have daemon running that continuously monitors the state of GPIO pin
-  // 22. When it receives a logic HIGH, it initiates a shutdown. :)
-  digitalWrite(PI_PWR_CMD, LOW);
-  while (digitalRead(PI_PWR_STATUS) == HIGH){
-    Serial.println("Waiting for Pi to power down...");
-    delay(1000);
-  }
-  Serial.println("Raspberry Pi is off. Cutting power...");
-  digitalWrite(PI_PWR_CTRL, LOW);
-
-  delay(1000);
-  Serial.flush();
-  enterSleep();
-}

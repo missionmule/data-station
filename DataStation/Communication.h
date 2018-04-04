@@ -8,6 +8,7 @@ class Communication : public SoftwareSerial{
 public:
 
   char station_id[2];
+  char newId[2] = {'0', '0'};
 
   // constructor
   Communication(int rx, int tx, int baudrate, char station_id[2]): SoftwareSerial(rx, tx){
@@ -22,6 +23,15 @@ public:
   // empty the incomming serial buffer
   void flushIncommingBuffer();
 
+  // get the new ID that the GCS wants to assign this station
+  int getNewId();
+
+  // return the first part of a new ID
+  char getId_1();
+
+  // return the second part of a new ID
+  char getId_2();
+  
 };
 
 #endif

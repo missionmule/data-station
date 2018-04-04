@@ -1,12 +1,6 @@
 #include "Communication.h"
 #include "PowerManager.h"
 
-
-#define PI_PWR_CTRL (2)
-#define PI_PWR_STATUS (3)
-#define PI_PWR_CMD (4)
-#define SNSR_PWR_CTRL (5)
-
 int shutdownStart = 1;
 
 char STATION_ID[2] = {'0', '1'};
@@ -56,8 +50,16 @@ void executeCommand(char command) {
       Serial.println("Received Command: EXTEND_TIME");
       timerStart = millis();
       break;
-    // TODO: Add option for setting a new ID, case 4
-    // TODO: Add optoin for returning GPS coordinates
+    case '4':
+      Serial.println("Received Command: RESET_ID");
+      if (comms->getNewId()){
+        STATION_ID[0] = comms->getId_1();
+        STATION_ID[1] = comms->getId_2();
+      }
+      break;
+    case '5':
+      Serial.println("Received Command: REQUEST_GPS");
+      break;
     default:
       Serial.println("ERROR: Command not recognized");
       break;

@@ -53,3 +53,17 @@ void Communication::flushIncommingBuffer(){
   
 }
 
+int Communication::getNewId(){
+  // TODO: read int new ID from GCS
+  return 0;
+}
+
+char Communication::getId_1(){
+  return newId[0];
+}
+
+char Communication::getId_2(){
+  return newId[1];
+}
+
+

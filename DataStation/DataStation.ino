@@ -1,5 +1,6 @@
 #include "Communication.h"
 #include "PowerManager.h"
+#include "SensorComm.h"
 
 int shutdownStart = 1;
 
@@ -8,16 +9,15 @@ char STATION_ID[2] = {'0', '1'};
 volatile int f_wdt=1;
 volatile int count = 0;
 
-Communication * comms = new Communication(10, 11, 9600, STATION_ID); // RX, TX, Baudrate
+Communication * comms = new Communication(10, 11, 57600, STATION_ID); // RX, TX, Baudrate
 PowerManager * powerManager = new PowerManager(comms, &f_wdt);
+SensorComm * sensorComm = new SensorComm();
 
 char droneCommand;
 
 unsigned long timerStart;
 unsigned long timeElapsed;
 const unsigned long TIMEOUT = 60000;
-
-
 
 void executeCommand(char command) {
   char preambleResponse[3] = {'c','a','t'};
@@ -33,7 +33,7 @@ void executeCommand(char command) {
 
   // flush outgoing and incoming buffer, respectively
   comms->flush();
-  comms->flushIncommingBuffer();
+  //comms->flushIncommingBuffer();
 
   // execute the requested command
   switch (command) {
@@ -55,6 +55,9 @@ void executeCommand(char command) {
       if (comms->getNewId()){
         STATION_ID[0] = comms->getId_1();
         STATION_ID[1] = comms->getId_2();
+        Serial.print("New ID set: ");
+        Serial.print(STATION_ID[0]);
+        Serial.println(STATION_ID[1]);
       }
       break;
     case '5':
@@ -70,8 +73,9 @@ void executeCommand(char command) {
 // TODO: Add support for UBlox GPS Module, comm with I2C
 
 void setup(){
-  Serial.begin(9600);
-
+  Serial.begin(57600);
+  comms->begin(57600);
+  sensorComm->begin();
   
 
   // Initialize Watchdog Timer
@@ -93,8 +97,6 @@ ISR(WDT_vect) {
   }
 }
 
-
-
 void loop(){
   // Wait until the watchdog has triggered a wake up.
   if(f_wdt != 1) {
@@ -102,7 +104,10 @@ void loop(){
     return;
   }
 
+  Serial.println("Awake!");
+
   droneCommand = comms->getDroneCommand();
+  
 
   if (droneCommand){
     timerStart = millis();
@@ -128,9 +133,11 @@ void loop(){
 
     }
   }
+  else{
+      Serial.println("No messages received");
+  }
 
   Serial.println("Going to slepp...ZZzzz");
-
   powerManager->shutDownSystem();
 
  }

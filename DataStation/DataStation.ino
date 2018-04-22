@@ -42,14 +42,17 @@ void executeCommand(char command) {
       shutdownStart = 0;
       powerManager->powerUpSystem();
       break;
+      
     case '2':
       Serial.println("Received Command: POWER_OFF");
       shutdownStart = 1;
       break;
+      
     case '3':
       Serial.println("Received Command: EXTEND_TIME");
       timerStart = millis();
       break;
+      
     case '4':
       Serial.println("Received Command: RESET_ID");
       if (comms->getNewId()){
@@ -60,9 +63,16 @@ void executeCommand(char command) {
         Serial.println(STATION_ID[1]);
       }
       break;
+      
     case '5':
       Serial.println("Received Command: REQUEST_GPS");
+      String gpsCoordinate = SensorComm->getGpsData();
+      // send prelimitor, GPS Data, then postlimitor
+      write('<');
+      write(gpsCoordinate);
+      write('>')
       break;
+      
     default:
       Serial.println("ERROR: Command not recognized");
       break;

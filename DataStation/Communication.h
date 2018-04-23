@@ -8,12 +8,16 @@ class Communication : public SoftwareSerial{
 public:
 
   char station_id[2];
+  long baudrate = 57600;
 
   // constructor
   Communication(int rx, int tx, int baudrate, char station_id[2]): SoftwareSerial(rx, tx){
     (this->station_id)[0] = station_id[0];
     (this->station_id)[1] = station_id[1];
   }
+
+  // begin function  
+  void begin(){ SoftwareSerial::begin(baudrate); }
 
   // check to see if there are available commands
   int getDroneCommand();

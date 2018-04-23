@@ -69,15 +69,14 @@ void executeCommand(char command) {
       
     case '5':
       Serial.println("Received Command: REQUEST_GPS");
-      //sensorComm->listen();
-      //packetOut = sensorComm->getGpsData();
-      packetOut = "1234567891";
+      sensorComm->begin();
+      sensorComm->listen();
+      packetOut = sensorComm->getGpsData();
       comms->listen();
       // send prelimitor, GPS Data, then postlimitor
       comms->write('<');
       comms->writeString(packetOut);
       comms->write('>');
-      
       break;
       
     default:
@@ -92,7 +91,7 @@ void executeCommand(char command) {
 void setup(){
   Serial.begin(57600);
   sensorComm->begin();
-  comms->begin(57600);
+  comms->begin();
   comms->listen();
   
   // Initialize Watchdog Timer

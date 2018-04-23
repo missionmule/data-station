@@ -17,10 +17,11 @@ char droneCommand;
 
 unsigned long timerStart;
 unsigned long timeElapsed;
-const unsigned long TIMEOUT = 60000;
+const unsigned long TIMEOUT = 6000000;
 
 void executeCommand(char command) {
   char preambleResponse[3] = {'c','a','t'};
+  String packetOut;
 
   for (int i = 0; i < 3; i++){
     comms->write(preambleResponse[i]);
@@ -62,15 +63,21 @@ void executeCommand(char command) {
         Serial.print(STATION_ID[0]);
         Serial.println(STATION_ID[1]);
       }
+      for (int i = 0; i < 3; i++)
+        comms->write(preambleResponse[i]);
       break;
       
     case '5':
       Serial.println("Received Command: REQUEST_GPS");
-      String gpsCoordinate = SensorComm->getGpsData();
+      //sensorComm->listen();
+      //packetOut = sensorComm->getGpsData();
+      packetOut = "1234567891";
+      comms->listen();
       // send prelimitor, GPS Data, then postlimitor
-      write('<');
-      write(gpsCoordinate);
-      write('>')
+      comms->write('<');
+      comms->writeString(packetOut);
+      comms->write('>');
+      
       break;
       
     default:
@@ -84,10 +91,10 @@ void executeCommand(char command) {
 
 void setup(){
   Serial.begin(57600);
-  comms->begin(57600);
   sensorComm->begin();
+  comms->begin(57600);
+  comms->listen();
   
-
   // Initialize Watchdog Timer
   powerManager->setupWatchDogTimer();
 

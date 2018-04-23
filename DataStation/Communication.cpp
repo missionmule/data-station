@@ -14,6 +14,7 @@ int Communication::getDroneCommand(){
     
     while (available()){  
       incommingByte = read();
+      Serial.println(incommingByte);
       
       if (idenMatch == true) {
         return incommingByte;
@@ -52,6 +53,7 @@ bool Communication::checkForPreamble(){
 
   while (available()){
     incommingByte = read();
+    Serial.println(incommingByte);
     delay(10);
     
     if (incommingByte == preamble[preamblemCount]){
@@ -105,6 +107,18 @@ char Communication::getId_1(){
 
 char Communication::getId_2(){
   return station_id[1];
+}
+
+void Communication::writeString(String string){
+  int packetSize = string.length();
+  Serial.println(string);
+  char arrayOut[packetSize+1];
+  string.toCharArray(arrayOut, packetSize+1);
+  for (int i = 0; i < packetSize; i++){
+    write(arrayOut[i]);
+    Serial.print("--->");
+    Serial.println(arrayOut[i]);
+  }
 }
 
 

@@ -32,6 +32,9 @@ public:
 
   // check for a matching preamble
   bool checkForPreamble();
+
+  // write a string
+  void writeString(String string);
   
 };
 

@@ -104,6 +104,7 @@ void PowerManager::enterSleep(){
   power_all_enable();
 
   digitalWrite(SNSR_PWR_CTRL, HIGH);
-  comms->begin(9600); 
+  comms->begin(57600); 
+  comms->listen();
 }
 

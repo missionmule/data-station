@@ -78,6 +78,13 @@ void executeCommand(char command) {
       comms->writeString(packetOut);
       comms->write('>');
       break;
+
+    case '6':
+      Serial.println("Received Command: DEPLOYMENT_SYS_TEST");
+      comms->write('<');
+      comms->writeString("245233230,544344570");
+      comms->write('>');
+      break;
       
     default:
       Serial.println("ERROR: Command not recognized");

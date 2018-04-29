@@ -63,8 +63,6 @@ void executeCommand(char command) {
         Serial.print(STATION_ID[0]);
         Serial.println(STATION_ID[1]);
       }
-      for (int i = 0; i < 3; i++)
-        comms->write(preambleResponse[i]);
       break;
       
     case '5':

@@ -25,7 +25,7 @@ public:
     gpsModule.sendCommand(PGCMD_ANTENNA);
   }
 
-  // stop communication with sensonrs
+  // stop communication with sensodfghjnrs
   void stop(){ commPort.end(); }
 
   // get actualy GPS data (returns in 1/100,000 of a degree)

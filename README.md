@@ -1,30 +1,45 @@
-# Camera trap
+# Data Station
 
-This repository holds all code necessary for the camera trap.
+This repository holds all information necessary for the camera trap.
 
-## Setup
+## Raspberry Pi Software
+Zane, write something here.
 
-### Uploading new SleepyPi firmware to camera trap
+## Hardware
+### Power Management Circuit
+Right now, the PMC is made with through hole components. Seeed Studio manufactures the PCB, and Mission Mule separately buys and solders all of the electronic components.
 
-The goal is to automate SleepyPi firmware upload in the future, but it is manual now.
+#### Ordering the PCB
+1. Download both zip folders in the latest version of fabrication files folder.
+2. Upload them to [Seeed Studio Fusion PCB Manufacturing](https://www.seeedstudio.com/fusion_pcb.html).
+3. Make the following selections:
+    1. Base Material: FR4 TG130
+    2. No. of Layers: 2
+    3. PCB Dimensions: 155mm x 80mm
+    4. PCB Quantity: whatever you want
+    5. No. of Different Designs: 1
+    6. PCB Thickness: 1.60 mm
+    7. PCB Color: Green
+    8. Surface Finish: HASL
+    9. Minimum Solder Mask Dam: 0.4mm
+    10. Copper Weight: 1oz.
+    11. Minimum Drill Hole Size: 0.3mm
+    12. Trace Width / Spacing: 6/6 mil
+    13. Blind or Buried Vias: No
+    14. Plated Half-holes / Castellated Holes: No
+    15. Impedance Control: No
 
-1. The IP of the camera trap is `192.168.42.11+CAMERA_ID`. Therefore, for camera trap ID 001, the IP address is 192.168.42.11.12. For camera trap ID 002, the IP address is 192.168.42.11.13.
+#### Ordering the Components
+Download the latest bill of materials. Follow the Octopart link to the PMC BOM. Order components, choosing vendor according to availability, price and time requirements.
 
-2. Camera trap SleepyPi firmware is located in /home/pi/sketchbook/. Because Arduino sketchbook is iffy (e.g. Arduino breaks when there are dashes in file names, while git loves to put dashes everywhere). You must copy the SleepyPi firmware manually into the sketchbook folder using scp. The command is `scp SOURCE_FILE IP_ADDR:/home/pi/sketchbook/` For example, `scp ./firmware.ino 192.168.42.11.13:/home/pi/sketchbook/`
+### Enclosure
+Download the the latest bill of materials.  Follow the Octopart link to the Data Station Major Component BOM. Order components, choosing vendor according to availability, price and time requirements. Order materials from the Data Tools and Consumables BOM as necessary.
 
-3. To upload firmware onto SleepyPi you will have to connect to the camera trap over RealVNC. Both you and the camera trap must be connected to the Wadi Drone network. You use the Raspberry Pi UNIX login, which is `pi` as user name and `raspberry` as password.
+Assemble enclosure? Shien...
 
-### Libraries necessary for Sleepy Pi 2
-These libraries only need to be installed the first time the Raspberry Pi is set up from scratch.
+## Power Management Firmware
+### Requirements
+1. Arduino IDE
+2. [Adafruit GPS Arduino Library](https://github.com/adafruit/Adafruit_GPS)
 
-    git clone https://github.com/PaulStoffregen/Time.git
-    git clone https://github.com/rocketscream/Low-Power.git
-    # rename the directory as Arduino doesn't like the dash
-    mv /home/pi/sketchbook/libraries/Low-Power /home/pi/sketchbook/libraries/LowPower
-    git clone https://github.com/SpellFoundry/PCF8523.git
-    git clone https://github.com/GreyGnome/PinChangeInt.git
-
-
-## Tips
-- SleepyPi compiler does not like dashes in the names of files
-- you can create a soft link with `ln -s` from sketchbook to git folder
+Download the code in the [DataStation](https://github.com/missionmule/data-station/tree/master/DataStation) and compile for "Arduino Pro or Pro Mini". Upload  using an [FTDI Basic Breakout Board](https://www.sparkfun.com/products/9716)

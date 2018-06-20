@@ -1,6 +1,6 @@
 # Data Station
 
-This repository holds all information necessary for the camera trap.
+This repository holds all information necessary to build a Mission Mule Data Station.
 
 ## Raspberry Pi Software
 Zane, write something here.
@@ -42,4 +42,4 @@ Assemble enclosure? Shien...
 1. Arduino IDE
 2. [Adafruit GPS Arduino Library](https://github.com/adafruit/Adafruit_GPS)
 
-Download the code in the [DataStation](https://github.com/missionmule/data-station/tree/master/DataStation) and compile for "Arduino Pro or Pro Mini". Upload  using an [FTDI Basic Breakout Board](https://www.sparkfun.com/products/9716)
+Download the code in the [DataStation](https://github.com/missionmule/data-station/tree/master/DataStation) and compile for "Arduino Pro or Pro Mini". Upload  using an [FTDI Basic Breakout Board](https://www.sparkfun.com/products/9716).

@@ -3,7 +3,7 @@
 This repository holds all information necessary to build a Mission Mule Data Station.
 
 ## Raspberry Pi Software
-Zane, write something here.
+Zane is a little girl. 
 
 ## Hardware
 ### Power Management Circuit

@@ -21,8 +21,11 @@ void PowerManager::shutDownSystem(){
   // The Raspi should have daemon running that continuously monitors the state of GPIO pin
   // 22. When it receives a logic HIGH, it initiates a shutdown. :)
   digitalWrite(PI_PWR_CMD, LOW);
+  int timerStart = millis();
   while (digitalRead(PI_PWR_STATUS) == HIGH){
     delay(1000);
+    // can't wait forever... if 5 mins pass, break this loop and shutdown.
+    if ((millis() - timerStart) > POWER_OFF_TIMEOUT){ break; }
   }
   digitalWrite(PI_PWR_CTRL, LOW);
 

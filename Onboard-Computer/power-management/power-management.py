@@ -50,7 +50,7 @@ while True:
         logging.info("Initiating shutdown...")
         time.sleep(5)
         if not (GPIO.input(pi_override_cmd) or GPIO.input(pi_power_cmd_3v3)):
-            ogging.info("Shutting down")
+            logging.info("Shutting down")
             os.system("sudo shutdown now")
         else:
             logging.info("Aborting shutdown")

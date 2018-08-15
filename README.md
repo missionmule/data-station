@@ -5,9 +5,8 @@ This repository holds all information necessary to build a Mission Mule Data Sta
 ## Raspberry Pi Software
 Zane is a little girl.
 
-## Hardware
-### Materials (~$275)
-#### Ordering the PCB
+## Hardware (~$275)
+### Ordering the PCB
 1. Download both zip folders in the latest version of fabrication files folder.
 2. Upload them to [Seeed Studio Fusion PCB Manufacturing](https://www.seeedstudio.com/fusion_pcb.html).
 3. Make the following selections:
@@ -29,7 +28,7 @@ Zane is a little girl.
     
 **Estimated Cost: $6.90**
 
-#### Ordering the Components
+### Ordering the Components
 
 Items in BOM 1  are less ubiquotous and should be ordered on a per data station basis. Items in BOM 2 often arrive in bulk, so order accordingly. Items in BOM 3 should be ordered on a per PMC basis. 
 
@@ -62,7 +61,7 @@ BOM 2 - Enclosure - Other Components
 
 **Estimated Total Cost: $11.38**
 
-BOM 3 - Power Management Circuit 
+BOM 3 - Power Management Circuit - [Octopart Link](https://octopart.com/bom-tool/1G1U2eW2#)
 
 | Description          | Qty | Line Item          | Unit Price                                            | Line Total | 
 |----------------------|-----|--------------------|-------------------------------------------------------|------------| 

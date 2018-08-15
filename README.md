@@ -34,6 +34,7 @@ Zane is a little girl.
 Items in BOM 1  are less ubiquotous and should be ordered on a per data station basis. Items in BOM 2 often arrive in bulk, so order accordingly. Items in BOM 3 should be ordered on a per PMC basis. 
 
 BOM 1 - Enclosure - DigiKey Components - [Octopart Link](https://octopart.com/bom-tool/w3m3v7al)
+
 | Item                                      | Qty | Part Number            | Unit Price  | Line Total  | 
 |-------------------------------------------|-----|------------------------|-------------|-------------| 
 | Bud Industries Enclosure                  | 1   | PTS-25319-C            | 17.46       | 17.46       | 
@@ -51,6 +52,7 @@ BOM 1 - Enclosure - DigiKey Components - [Octopart Link](https://octopart.com/bo
 **Estimated Total Cost: $110.15**
 
 BOM 2 - Enclosure - Other Components
+
 | Item       | Qty | Unit Price | Line Total | Link | 
 |------------|-----|------------|------------|------|
 |M4 Standoffs| 4   | 0.894      | 3.576      | [Amazon](https://www.amazon.com/gp/product/B0177VG4Q8/ref=oh_aui_detailpage_o09_s00?ie=UTF8&psc=1) |
@@ -61,6 +63,7 @@ BOM 2 - Enclosure - Other Components
 **Estimated Total Cost: $11.38**
 
 BOM 3 - Power Management Circuit 
+
 | Description          | Qty | Line Item          | Unit Price                                            | Line Total | 
 |----------------------|-----|--------------------|-------------------------------------------------------|------------| 
 | GPS Module           | 1   | 746                | 34.95                                                 | 34.95      | 

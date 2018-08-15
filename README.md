@@ -97,7 +97,7 @@ assemble and stuff...
 1. Arduino IDE
 2. [Adafruit GPS Arduino Library](https://github.com/adafruit/Adafruit_GPS)
 
-Download the code in the [DataStation](https://github.com/missionmule/data-station/tree/master/DataStation) and compile for "Arduino Pro or Pro Mini". Upload  using an [FTDI Basic Breakout Board](https://www.sparkfun.com/products/9716).
+Download the code in the [DataStation](https://github.com/missionmule/data-station/tree/master/Microcontroller) and compile for "Arduino Pro or Pro Mini". Upload  using an [FTDI Basic Breakout Board](https://www.sparkfun.com/products/9716).
 
 ### XBee Module
 Download [XCTU](https://www.digi.com/products/xbee-rf-solutions/xctu-software/xctu) in order to configure the XBee module:

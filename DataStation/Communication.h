@@ -7,13 +7,14 @@ class Communication : public SoftwareSerial{
 
 public:
 
-  char station_id[2];
+  char station_id[3];
   long baudrate = 57600;
 
   // constructor
-  Communication(int rx, int tx, int baudrate, char station_id[2]): SoftwareSerial(rx, tx){
+  Communication(int rx, int tx, int baudrate, char station_id[3]): SoftwareSerial(rx, tx){
     (this->station_id)[0] = station_id[0];
     (this->station_id)[1] = station_id[1];
+    (this->station_id)[2] = station_id[2];
   }
 
   // begin function  
@@ -29,10 +30,7 @@ public:
   bool getNewId();
 
   // return the first part of a new ID
-  char getId_1();
-
-  // return the second part of a new ID
-  char getId_2();
+  char getId(int place);
 
   // check for a matching preamble
   bool checkForPreamble();

@@ -16,7 +16,7 @@ private:
   const int PI_PWR_STATUS = 3;
   const int PI_PWR_CMD = 4;
   const int SNSR_PWR_CTRL = 5;
-  const int POWER_OFF_TIMEOUT = 300000; // 5 minutes
+  const unsigned long POWER_OFF_TIMEOUT = 300000; // 5 minutes
 
 public:
   // constructor

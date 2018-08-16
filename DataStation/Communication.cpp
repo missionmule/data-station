@@ -17,6 +17,7 @@ int Communication::getDroneCommand(){
       Serial.println(incommingByte);
       
       if (idenMatch == true) {
+        Serial.println("Identity Match");
         return incommingByte;
       }
 
@@ -27,7 +28,7 @@ int Communication::getDroneCommand(){
         else {
           preambleSuccess = false;
         }
-        idenMatch = (idenCount == 2);
+        idenMatch = (idenCount == 3);
       }
     }
     delay(500);
@@ -82,7 +83,7 @@ bool Communication::getNewId(){
         break;
     }
     delay(100);
-    while ((available()) && (count < 2)){
+    while ((available()) && (count < 3)){
       incommingByte = read();
       Serial.println(incommingByte);
       station_id[count] = incommingByte;
@@ -101,12 +102,8 @@ bool Communication::getNewId(){
 
 }
 
-char Communication::getId_1(){
-  return station_id[0];
-}
-
-char Communication::getId_2(){
-  return station_id[1];
+char Communication::getId(int place){
+  return station_id[place];
 }
 
 void Communication::writeString(String string){

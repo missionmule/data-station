@@ -4,7 +4,7 @@
 
 int shutdownStart = 1;
 
-char STATION_ID[2] = {'0', '1'};
+char STATION_ID[3] = {'4', 'c', 'd'};
 
 volatile int f_wdt=1;
 volatile int count = 0;
@@ -29,6 +29,7 @@ void executeCommand(char command) {
 
   comms->write(STATION_ID[0]);
   comms->write(STATION_ID[1]);
+  comms->write(STATION_ID[2]);
 
   comms->write(command);
 
@@ -57,11 +58,13 @@ void executeCommand(char command) {
     case '4':
       Serial.println("Received Command: RESET_ID");
       if (comms->getNewId()){
-        STATION_ID[0] = comms->getId_1();
-        STATION_ID[1] = comms->getId_2();
+        STATION_ID[0] = comms->getId(0);
+        STATION_ID[1] = comms->getId(1);
+        STATION_ID[2] = comms->getId(2);
         Serial.print("New ID set: ");
         Serial.print(STATION_ID[0]);
-        Serial.println(STATION_ID[1]);
+        Serial.print(STATION_ID[1]);
+        Serial.println(STATION_ID[2]);
       }
       break;
       
@@ -108,7 +111,7 @@ void setup(){
 // Watchdog Interrupt Service. This is executed when watchdog timed out.
 ISR(WDT_vect) {
   if(f_wdt == 0) {
-    if (count >= 1){
+    if (count >= 4){
       count = 0;
       f_wdt=1;
     }

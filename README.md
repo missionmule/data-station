@@ -103,9 +103,8 @@ Download the code in the [DataStation](https://github.com/missionmule/data-stati
 
 ### XBee Module
 Download [XCTU](https://www.digi.com/products/xbee-rf-solutions/xctu-software/xctu) in order to configure the XBee module:
-* CH: C
 * ID: 1005
-* DH: 0
-* DL: 1
-* MY: 2
+* HP: 1
+* DT: 10
+* MY: 20
 * BD: 57600

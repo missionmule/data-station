@@ -87,9 +87,9 @@ BOM 3 - Power Management Circuit - [Octopart Link](https://octopart.com/bom-tool
 
 ### Assembly
 #### Power Management Circuit
-Right now, the PMC is made with through hole components. Seeed Studio manufactures the PCB, and Mission Mule separately buys and solders all of the electronic components.
+Right now, the PMC is made with through hole components. Seeed Studio manufactures the PCB, and Mission Mule separately buys and solders all of the electronic components. For max eficiency, remove regulator and led on the Arduino Pro Mini (easily done with a small knife or pliers).
 
-IMPORTANT: The XBee Pro S3B [does not work with loads connected to the RSSI](https://www.sparkfun.com/products/11634). Thus, the RSSI pin on the XBee explorer must be removed. Additionally, remove the RSSI LED on the explorer (easily done with a small knife or pliers). 
+IMPORTANT: The XBee Pro S3B [does not work with loads connected to the RSSI signal](https://www.sparkfun.com/products/11634). Thus, the RSSI pin on the XBee explorer must be removed. Additionally, remove the RSSI LED on the explorer (easily done with a small knife or pliers). 
 
 #### Enclosure
 assemble and stuff...

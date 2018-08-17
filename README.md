@@ -108,3 +108,6 @@ Download [XCTU](https://www.digi.com/products/xbee-rf-solutions/xctu-software/xc
 * DT: 10
 * MY: 20
 * BD: 57600
+
+### Voltaic Battery
+The Voltaic battery must be configured for "Always On Mode". Follow the [Voltaic Guide](https://www.voltaicsystems.com/always-on#faq_4) to determine its current mode and to switch it into the approproate mode. 

@@ -58,6 +58,10 @@ BOM 2 - Enclosure - Other Components
 |M4 Screws   | 8   | 0.04       | 0.30       | [Amazon](https://www.amazon.com/gp/product/B07DF7GVRB/ref=oh_aui_detailpage_o09_s00?ie=UTF8&psc=1) |
 |90mm RP-SMA extension| 1 | 3.50 | 3.50 | [Amazon](https://www.amazon.com/gp/product/B076TCPTKL/ref=oh_aui_detailpage_o05_s00?ie=UTF8&psc=1) |
 |30 cm RP-SMA extension | 1 | 4.00 | 4.00 | [Amazon](https://www.amazon.com/Male-Female-Antenna-Extension-Cable/dp/B072VMHXSQ/ref=sr_1_sc_3?s=electronics&ie=UTF8&qid=1534375207&sr=1-3-spell&keywords=30+cm+rpsma+extesion) |
+|Male Headers  | ~10 | ~0.10 | ~1.00 | [Amazon](https://www.amazon.com/Hotop-Pack-Single-Header-Connector/dp/B06XR8CV8P/ref=sr_1_3?ie=UTF8&qid=1534624507&sr=8-3&keywords=headers+male&dpID=61eNmsXZqBL&preST=_SX342_QL70_&dpSrc=srch) |
+|Female Headers| ~10 | ~0.10 | ~1.00 | [Amazon](https://www.amazon.com/2-54mm-Straight-Connector-Assortment-Arduino/dp/B0785SP8PB/ref=sr_1_5?ie=UTF8&qid=1534624716&sr=8-5&keywords=female+headers)|
+|Raspi Female Headers| 1 | ~0.60 | ~0.60 | [Amazon](https://www.amazon.com/uxcell-2-54mm-40-Pin-Female-Connector/dp/B00R1LLM1M/ref=sr_1_3?ie=UTF8&qid=1534624810&sr=8-3&keywords=2x20+female+header) |
+|Raspi Male Header | 1 | ~0.80 | ~0.80 | [Amazon](https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=2x20+male+header) |
 
 **Estimated Total Cost: $11.38**
 

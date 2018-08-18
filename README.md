@@ -5,7 +5,7 @@ This repository holds all information necessary to build a Mission Mule Data Sta
 ## Raspberry Pi Software
 Zane is a little girl.
 
-## Hardware (~$275)
+## Hardware (~$295)
 ### Ordering the PCB
 1. Download both zip folders in the latest version of fabrication files folder.
 2. Upload them to [Seeed Studio Fusion PCB Manufacturing](https://www.seeedstudio.com/fusion_pcb.html).
@@ -86,8 +86,9 @@ BOM 3 - Power Management Circuit - [Octopart Link](https://octopart.com/bom-tool
 | USB Micro Breakout   | 1   | 1833               | 1.5                                                   | 1.50       | 
 | Debug Switches       | 6   | [link](https://www.amazon.com/gp/product/B06XJN3K8K/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1) | 0.15 | 0.91 |
 | USB Hub              | 1   | [link](https://www.amazon.com/MakerSpot-Stackable-Raspberry-Connector-Bluetooth/dp/B01IT1TLFQ) | 13.99 | 13.99 |
+| Wifi Module          | 1   | [link](https://www.amazon.com/gp/product/B00YI0AIRS/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1) | 18.99 | 18.99 |
 
-**Estimated Total Cost: $144.96**
+**Estimated Total Cost: $163.95**
 
 ### Assembly
 #### Power Management Circuit

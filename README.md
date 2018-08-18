@@ -70,20 +70,20 @@ BOM 3 - Power Management Circuit - [Octopart Link](https://octopart.com/bom-tool
 | Description          | Qty | Line Item          | Unit Price                                            | Line Total | 
 |----------------------|-----|--------------------|-------------------------------------------------------|------------| 
 | GPS Module           | 1   | 746                | 34.95                                                 | 34.95      | 
-| Raspberry Pi 0W      | 1   | ADA3400            | 10                                                    | 10         | 
+| Raspberry Pi 0W      | 1   | ADA3400            | 10                                                    | 10.00      | 
 | Arduino Pro Mini     | 1   | 2378               | 9.95                                                  | 9.95       | 
 | Voltage Regulator    | 1   | POLOLU-2118        | 4.97                                                  | 4.97       | 
-| FET Switch           | 2   | POLOLU-2808        | 4.5                                                   | 9          | 
+| FET Switch           | 2   | POLOLU-2808        | 4.5                                                   | 9.00       | 
 | XBee Explorer        | 1   | WRL-11373          | 9.95                                                  | 9.95       | 
 | XBee Pro S3B         | 1   | 602-1349-ND        | 37.97                                                 | 37.97      | 
-| Logic Converter      | 1   | BOB-12009          | 2.003                                                 | 2.003      | 
+| Logic Converter      | 1   | BOB-12009          | 2.003                                                 | 2.00       | 
 | Reed Switches        | 4   | 59165-1-S-00-A     | 0.715                                                 | 2.86       | 
-| LEDs                 | 4   | 204-10SURD/S530-A3 | 0.0619                                                | 0.2476     | 
-| Opto Isolator        | 1   | LTV-816            | 0.077                                                 | 0.077      | 
+| LEDs                 | 4   | 204-10SURD/S530-A3 | 0.0619                                                | 0.25       | 
+| Opto Isolator        | 1   | LTV-816            | 0.077                                                 | 0.08       | 
 | 1K Resistors         | 4   | CF14JT1K00         | 0.01                                                  | 0.04       | 
 | 2.1K Resistor        | 3   | RNF14FTE2K10       | 0.39                                                  | 1.17       | 
 | Temp/Humidity Sensor | 1   | HIH8120-021-001    | 5.38                                                  | 5.38       | 
-| USB Micro Breakout   | 1   | 1833               | 1.5                                                   | 1.5        | 
+| USB Micro Breakout   | 1   | 1833               | 1.5                                                   | 1.50       | 
 | Debug Switches       | 6   | [link](https://www.amazon.com/gp/product/B06XJN3K8K/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1) | 0.15 | 0.91 |
 | USB Hub              | 1   | [link](https://www.amazon.com/MakerSpot-Stackable-Raspberry-Connector-Bluetooth/dp/B01IT1TLFQ) | 13.99 | 13.99 |
 

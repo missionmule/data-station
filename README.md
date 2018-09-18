@@ -3,7 +3,6 @@
 This repository holds all information necessary to build a Mission Mule Data Station.
 
 ## Raspberry Pi Software
-Zane is a little girl.
 
 ## Hardware (~$295)
 ### Ordering the PCB

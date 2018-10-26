@@ -3,7 +3,7 @@
 
 // check to see if there are available commands
 int Communication::getDroneCommand(){
-  char incommingByte;
+  byte incommingByte;
   bool idenMatch = false;
   bool preambleSuccess = false;
   int idenCount = 0;
@@ -49,20 +49,16 @@ void Communication::flushIncommingBuffer(){
 // check to see if we succesfully received the preamble
 bool Communication::checkForPreamble(){
   char incommingByte;
-  char preamble[6] = {'s', 't', 'r', 'e', 'e', 't'};
+  char startDelimiter = '~';
   int preamblemCount = 0;
 
   while (available()){
     incommingByte = read();
     Serial.println(incommingByte);
     delay(10);
-    
-    if (incommingByte == preamble[preamblemCount]){
-      preamblemCount++;
-      if (preamblemCount == 6){
-        Serial.println("Preamble received");
-        return true;
-      }
+    if (incommingByte = startDelimiter) {
+      Serial.println("Start delimiter received");
+      return true;
     }
   }
   return false;

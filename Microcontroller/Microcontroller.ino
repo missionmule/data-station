@@ -4,7 +4,7 @@
 
 int shutdownStart = 1;
 
-char STATION_ID[3] = {'4', 'c', 'd'};
+char STATION_ID[3] = {'3', '2', '1'};
 
 volatile int f_wdt=1;
 volatile int count = 0;
@@ -20,12 +20,10 @@ unsigned long timeElapsed;
 const unsigned long TIMEOUT = 6000000;
 
 void executeCommand(char command) {
-  char preambleResponse[3] = {'c','a','t'};
+  char startDelimiter = '~';
   String packetOut;
 
-  for (int i = 0; i < 3; i++){
-    comms->write(preambleResponse[i]);
-  }
+  comms->write(startDelimiter);
 
   comms->write(STATION_ID[0]);
   comms->write(STATION_ID[1]);

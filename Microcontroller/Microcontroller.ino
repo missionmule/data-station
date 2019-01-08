@@ -4,7 +4,7 @@
 
 int shutdownStart = 1;
 
-char STATION_ID[3] = {'3', '2', '1'};
+char STATION_ID[3] = {'1', '0', '1'};
 
 volatile int f_wdt=1;
 volatile int count = 0;
@@ -42,17 +42,17 @@ void executeCommand(char command) {
       shutdownStart = 0;
       powerManager->powerUpSystem();
       break;
-      
+
     case '2':
       Serial.println("Received Command: POWER_OFF");
       shutdownStart = 1;
       break;
-      
+
     case '3':
       Serial.println("Received Command: EXTEND_TIME");
       timerStart = millis();
       break;
-      
+
     case '4':
       Serial.println("Received Command: RESET_ID");
       if (comms->getNewId()){
@@ -65,7 +65,7 @@ void executeCommand(char command) {
         Serial.println(STATION_ID[2]);
       }
       break;
-      
+
     case '5':
       Serial.println("Received Command: REQUEST_GPS");
       sensorComm->begin();
@@ -84,7 +84,7 @@ void executeCommand(char command) {
       comms->writeString("245233230,544344570");
       comms->write('>');
       break;
-      
+
     default:
       Serial.println("ERROR: Command not recognized");
       break;
@@ -99,7 +99,7 @@ void setup(){
   sensorComm->begin();
   comms->begin();
   comms->listen();
-  
+
   // Initialize Watchdog Timer
   powerManager->setupWatchDogTimer();
 
@@ -129,7 +129,6 @@ void loop(){
   Serial.println("Awake!");
 
   droneCommand = comms->getDroneCommand();
-  
 
   if (droneCommand){
     timerStart = millis();
@@ -163,4 +162,3 @@ void loop(){
   powerManager->shutDownSystem();
 
  }
-

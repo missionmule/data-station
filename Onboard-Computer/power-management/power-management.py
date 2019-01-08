@@ -5,12 +5,6 @@ import time
 
 import RPi.GPIO as GPIO
 
-logging_level = logging.DEBUG
-logging.basicConfig(filename='data-station.log',
-                        level=logging_level,
-                        format='%(asctime)s.%(msecs)03d %(levelname)s \t%(message)s',
-                        datefmt="%d %b %Y %H:%M:%S")
-
 # Log to STDOUT
 ch = logging.StreamHandler(sys.stdout)
 ch.setLevel(logging_level)

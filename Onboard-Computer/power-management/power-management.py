@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 
 # Log to STDOUT
 ch = logging.StreamHandler(sys.stdout)
-ch.setLevel(logging_level)
+ch.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s.%(msecs)03d %(levelname)s %(message)s')
 ch.setFormatter(formatter)
 logging.getLogger().addHandler(ch)
@@ -33,6 +33,7 @@ GPIO.setup(pi_power_cmd_3v3, GPIO.IN)
 GPIO.output(pi_power_status, GPIO.HIGH)
 
 while True:
+    time.sleep(5)
     if (GPIO.input(pi_override_cmd) or GPIO.input(pi_power_cmd_3v3)):
         if (GPIO.input(pi_override_cmd)):
             logging.debug("PI_OVERRIDE_CMD is HIGH")
